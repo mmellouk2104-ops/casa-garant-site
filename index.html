@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casa Garant — Loyer garanti. Bien préservé.</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1E3356;
+      --blue-dark: #0F1E33;
+      --gold: #C8A96A;
+      --gold-dark: #7A5B2D;
+      --beige: #F8F4EE;
+      --beige-warm: #EDE8DE;
+      --white: #FFFFFF;
+      --text: #1F2937;
+      --text-soft: #374151;
+      --focus: #B8863B;
+      --line: rgba(200,169,106,.25);
+      --shadow-soft: 0 12px 30px rgba(30,51,86,.06);
+      --shadow-hover: 0 16px 40px rgba(30,51,86,.12);
+      --font-display: 'DM Sans', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--beige);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5vw;
+      height: 82px;
+      background: rgba(15,30,51,.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      transition: box-shadow .3s;
+    }
+
+    nav.scrolled {
+      box-shadow: 0 4px 32px rgba(0,0,0,.25);
+    }
+
+    .nav-logo {
+      height: 52px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--beige);
+      text-decoration: none;
+      font-size: .95rem;
+      letter-spacing: .02em;
+      transition: color .2s;
+      font-weight: 500;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--blue);
+      border: none;
+      cursor: pointer;
+      padding: .7rem 1.6rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: -.01em;
+      transition: background .2s, transform .15s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .nav-cta:hover {
+      background: #d4b87a;
+      transform: translateY(-1px);
+    }
+
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--blue-dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 140px 6vw 80px 8vw;
+      z-index: 2;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border: 1px solid rgba(200,169,106,.45);
+      padding: .45rem 1rem;
+      color: #E5C78D;
+      font-size: .82rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 2rem;
+      width: fit-content;
+      font-weight: 500;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    h1, h2, .service-title, .stat-label, .promise-point h3 {
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 5.5vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.02;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    .hero-sub {
+      font-size: 1.08rem;
+      color: rgba(248,244,238,.92);
+      line-height: 1.75;
+      max-width: 520px;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--blue);
+      padding: .95rem 2rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.05rem;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+
+    .btn-primary:hover {
+      background: #d4b87a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(200,169,106,.35);
+    }
+
+    .btn-outline {
+      border: 1px solid rgba(248,244,238,.75);
+      color: var(--beige);
+      padding: .95rem 2rem;
+      font-family: var(--font-display);
+      font-weight: 500;
+      font-size: 1.05rem;
+      background: transparent;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(255,255,255,.03);
+    }
+
+    .hero-right {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 6vw;
+    }
+
+    .hero-icon-wrap {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-icon {
+      width: 320px;
+      height: 320px;
+      object-fit: contain;
+      display: block;
+      filter: drop-shadow(0 24px 64px rgba(0,0,0,.5));
+      animation: floatY 4s ease-in-out infinite;
+    }
+
+    @keyframes floatY {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+
+    .hero-ring {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,169,106,.18);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      animation: spin 20s linear infinite;
+    }
+
+    .hero-ring::before {
+      content: '';
+      position: absolute;
+      top: -4px;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      transform: translateX(-50%);
+    }
+
+    @keyframes spin {
+      to { transform: translate(-50%,-50%) rotate(360deg); }
+    }
+
+    .hero-ring2 {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,169,106,.09);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+
+    .hero-accent-line {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 48px;
+      left: 8vw;
+      right: 0;
+      display: flex;
+      gap: 3rem;
+      z-index: 2;
+    }
+
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: .82rem;
+      color: rgba(248,244,238,.82);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-top: .25rem;
+      font-weight: 500;
+    }
+
+    section {
+      padding: 120px 8vw;
+    }
+
+    .section-tag {
+      font-size: .78rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      margin-bottom: 1rem;
+      display: block;
+      font-weight: 700;
+    }
+
+    h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      color: var(--blue-dark);
+    }
+
+    h2 em {
+      color: var(--gold-dark);
+      font-style: normal;
+    }
+
+    .section-intro {
+      font-size: 1.08rem;
+      color: var(--text-soft);
+      max-width: 600px;
+      line-height: 1.8;
+      font-weight: 400;
+    }
+
+    #stats {
+      background: var(--beige-warm);
+    }
+
+    .stats-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 2px;
+    }
+
+    .stat-block {
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      border-bottom: 3px solid var(--gold);
+      transition: background .25s, transform .25s, box-shadow .25s;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .stat-block:hover {
+      background: var(--blue);
+      transform: translateY(-4px);
+    }
+
+    .stat-block:hover .stat-label,
+    .stat-block:hover .stat-sub {
+      color: var(--beige) !important;
+    }
+
+    .stat-label {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: .75rem;
+    }
+
+    .stat-sub {
+      font-size: .97rem;
+      color: var(--text-soft);
+      font-weight: 400;
+      line-height: 1.75;
+    }
+
+    #process,
+    #promise {
+      background: var(--white);
+    }
+
+    .services-header {
+      max-width: 620px;
+      margin-bottom: 4rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 2px;
+    }
+
+    .service-card {
+      background: var(--beige);
+      padding: 2.5rem 2rem;
+      border-top: 3px solid transparent;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0;
+      background: var(--blue);
+      transition: height .35s ease;
+      z-index: 0;
+    }
+
+    .service-card:hover {
+      border-top-color: var(--gold);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .service-card:hover::before {
+      height: 100%;
+    }
+
+    .service-card:hover .service-text,
+    .service-card:hover .service-title,
+    .service-card:hover .service-num {
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-card:hover .service-title {
+      color: var(--white);
+    }
+
+    .service-card:hover .service-text {
+      color: rgba(248,244,238,.92);
+    }
+
+    .service-card:hover .service-num {
+      color: rgba(200,169,106,.45);
+    }
+
+    .service-num {
+      font-family: var(--font-display);
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #B8B1A7;
+      line-height: 1;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .service-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      margin-bottom: .75rem;
+    }
+
+    .service-text {
+      font-size: .98rem;
+      color: var(--text-soft);
+      line-height: 1.8;
+      font-weight: 400;
+    }
+
+    .promise-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .promise-points {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .promise-point {
+      background: var(--beige);
+      padding: 1.6rem;
+      border-left: 3px solid var(--gold);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .promise-point h3 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      margin-bottom: .5rem;
+      color: var(--blue-dark);
+      font-weight: 700;
+    }
+
+    .promise-point p {
+      color: var(--text-soft);
+      line-height: 1.75;
+      font-weight: 400;
+    }
+
+    #cta {
+      background: var(--blue-dark);
+      text-align: center;
+      padding: 100px 8vw;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(200,169,106,.08) 0%, transparent 70%);
+    }
+
+    #cta h2 {
+      color: var(--white);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    #cta h2 em {
+      color: var(--gold);
+    }
+
+    #cta p {
+      color: rgba(248,244,238,.92);
+      margin-bottom: 2.5rem;
+      font-size: 1.08rem;
+      font-weight: 400;
+      position: relative;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.8;
+    }
+
+    #cta .btn-primary {
+      position: relative;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 900px) {
+      #hero {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-right {
+        display: none;
+      }
+
+      .hero-stats {
+        position: static;
+        margin-top: 3rem;
+        flex-wrap: wrap;
+        gap: 2rem;
+        padding: 0;
+      }
+
+      .hero-left {
+        padding: 140px 6vw 60px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .promise-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      section {
+        padding: 80px 6vw;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <img src="logo-casa-garant.png" alt="Casa Garant" class="nav-logo">
+
+    <ul class="nav-links">
+      <li><a href="#stats">Avantages</a></li>
+      <li><a href="#process">Fonctionnement</a></li>
+      <li><a href="#promise">Promesse</a></li>
+    </ul>
+
+    <a
+      href="mailto:contact.casagarant@gmail.com?subject=%C3%89tudier%20mon%20bien&body=Bonjour%20Casa%20Garant%2C%0A%0AJe%20souhaite%20%C3%AAtre%20recontact%C3%A9(e)%20pour%20%C3%A9tudier%20mon%20bien.%0A%0ANom%20%3A%0AT%C3%A9l%C3%A9phone%20%3A%0AVille%20du%20bien%20%3A%0AType%20de%20bien%20%3A%0AMessage%20%3A%0A"
+      class="nav-cta"
+    >
+      Étudier mon bien
+    </a>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-accent-line"></div>
+
+    <div class="hero-left">
+      <div class="hero-badge">Gestion locative professionnelle</div>
+
+      <h1>Votre loyer,<br><em>garanti.</em><br>Votre bien, préservé.</h1>
+
+      <p class="hero-sub">
+        Casa Garant prend en charge la gestion de votre bien en garantissant un loyer mensuel,
+        sans impayés, sans stress. Propriétaires, dormez tranquilles.
+      </p>
+
+      <div class="hero-actions">
+        <a
+          href="mailto:contact.casagarant@gmail.com?subject=%C3%89tudier%20mon%20bien&body=Bonjour%20Casa%20Garant%2C%0A%0AJe%20souhaite%20%C3%AAtre%20recontact%C3%A9(e)%20pour%20%C3%A9tudier%20mon%20bien.%0A%0ANom%20%3A%0AT%C3%A9l%C3%A9phone%20%3A%0AVille%20du%20bien%20%3A%0AType%20de%20bien%20%3A%0AMessage%20%3A%0A"
+          class="btn-primary"
+        >
+          Étudier mon bien
+        </a>
+
+        <a href="#process" class="btn-outline">Découvrir le fonctionnement</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">100%</div>
+          <div class="hero-stat-label">Loyer garanti</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">0</div>
+          <div class="hero-stat-label">Impayés</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num">48h</div>
+          <div class="hero-stat-label">Mise en location</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-icon-wrap">
+        <div class="hero-ring2"></div>
+        <div class="hero-ring"></div>
+        <img src="icon-casa-garant.png" alt="Icône Casa Garant" class="hero-icon">
+      </div>
+    </div>
+  </section>
+
+  <section id="stats">
+    <div class="stats-intro">
+      <div class="reveal">
+        <span class="section-tag">Pourquoi Casa Garant</span>
+        <h2>Pourquoi choisir<br>Casa Garant</h2>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-block reveal">
+        <div class="stat-label">💰 Revenu sécurisé</div>
+        <div class="stat-sub">Un loyer garanti pour une visibilité financière plus claire et plus stable.</div>
+      </div>
+
+      <div class="stat-block reveal">
+        <div class="stat-label">🏠 Bien entretenu</div>
+        <div class="stat-sub">Votre logement est suivi et maintenu en excellent état tout au long de l’exploitation.</div>
+      </div>
+
+      <div class="stat-block reveal">
+        <div class="stat-label">⚙️ Gestion complète</div>
+        <div class="stat-sub">Nous nous occupons de toute la gestion, de la coordination et du suivi opérationnel.</div>
+      </div>
+
+      <div class="stat-block reveal">
+        <div class="stat-label">📑 Conformité réglementaire</div>
+        <div class="stat-sub">Nous vérifions l’éligibilité du logement et le respect des obligations réglementaires.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="services-header reveal">
+      <span class="section-tag">Comment ça marche</span>
+      <h2>Une mise en location <br><em>simple et sécurisée</em></h2>
+      <p class="section-intro">
+        Nous prenons en charge chaque étape pour vous offrir un revenu stable, sans gestion lourde ni imprévu.
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="service-num">01</span>
+        <div class="service-title">Analyse du bien</div>
+        <p class="service-text">
+          Nous étudions votre logement, sa situation et son éligibilité pour construire une solution adaptée.
+        </p>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="service-num">02</span>
+        <div class="service-title">Signature & mise en place</div>
+        <p class="service-text">
+          Une fois le cadre validé, nous mettons en place la location et organisons l’exploitation du bien.
+        </p>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="service-num">03</span>
+        <div class="service-title">Gestion continue</div>
+        <p class="service-text">
+          Vous recevez votre loyer pendant que nous assurons le suivi du logement et la coordination au quotidien.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="promise">
+    <div class="promise-layout">
+      <div class="reveal">
+        <span class="section-tag">Promesse</span>
+        <h2>Une location plus simple, <br><em>plus sûre, plus sereine</em></h2>
+        <p class="section-intro">
+          Avec Casa Garant, nous vous proposons un cadre clair : un revenu sécurisé,
+          un logement suivi avec attention et une gestion complète, pour que vous puissiez
+          louer sans stress ni charge mentale.
+        </p>
+      </div>
+
+      <div class="promise-points reveal">
+        <div class="promise-point">
+          <h3>Un revenu stable</h3>
+          <p>Votre loyer est garanti pour vous offrir une meilleure visibilité financière.</p>
+        </div>
+
+        <div class="promise-point">
+          <h3>Un bien préservé</h3>
+          <p>Votre logement est suivi avec sérieux et maintenu dans un excellent état.</p>
+        </div>
+
+        <div class="promise-point">
+          <h3>Une gestion sans charge</h3>
+          <p>Nous coordonnons l’ensemble du dispositif pour vous libérer des contraintes du quotidien.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cta">
+    <h2>Passez à une location plus <em>sereine</em></h2>
+    <p>
+      Recevez une première estimation et découvrez si votre logement peut intégrer le dispositif Casa Garant.
+    </p>
+
+    <a
+      href="mailto:contact.casagarant@gmail.com?subject=Recevoir%20une%20premi%C3%A8re%20estimation&body=Bonjour%20Casa%20Garant%2C%0A%0AJe%20souhaite%20recevoir%20une%20premi%C3%A8re%20estimation%20pour%20mon%20bien.%0A%0ANom%20%3A%0AT%C3%A9l%C3%A9phone%20%3A%0AEmail%20%3A%0AVille%20du%20bien%20%3A%0AType%20de%20bien%20%3A%0ASurface%20%3A%0AMessage%20%3A%0A"
+      class="btn-primary"
+    >
+      Recevoir une première estimation
+    </a>
+  </section>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    const reveals = document.querySelectorAll('.reveal');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    const revealOnScroll = () => {
+      const trigger = window.innerHeight * 0.88;
+      reveals.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < trigger) {
+          el.classList.add('visible');
+        }
+      });
+    };
+
+    revealOnScroll();
+    window.addEventListener('scroll', revealOnScroll);
+  </script>
+
+</body>
+</html>
